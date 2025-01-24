@@ -9,7 +9,7 @@ RUN bun build --compile --minify --sourcemap --target=bun-linux-x64 ./src/index.
 FROM oven/bun:distroless AS release
 WORKDIR /app
 COPY --from=install /app/logkraken /app/logkraken
-RUN mkdir logs
+COPY --from=install /app/logs /app/logs
 
 EXPOSE 3333/tcp
 ENTRYPOINT ["./logkraken"]
