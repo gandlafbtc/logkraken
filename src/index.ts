@@ -2,11 +2,23 @@ import cors from "@elysiajs/cors";
 import Elysia from "elysia";
 import { ElysiaWS } from "elysia/dist/ws";
 import { log, setUpLogger } from "../logger";
+import staticPlugin from "@elysiajs/static";
+import { basicAuth } from "@eelkevdbos/elysia-basic-auth";
 let connections = new Map<string, Socket>()
 const decoder = new TextDecoder()
-
+process.env["BASIC_AUTH_CREDENTIALS"] = "admin:admin;user:user"
 const app = new Elysia()
   .use(cors())
+  .get('/', (req) => {
+    log.info`GET /`
+    req.request
+    req.set.headers = {
+      'Content-Type': 'application/json',
+    }
+    return {
+      name: `logkraken`,
+    }
+  })
   .get('/', (req) => {
     log.info`GET /`
     req.request
@@ -35,6 +47,15 @@ const app = new Elysia()
       log.error('Error on socket: {e}', { e })
     }
   })
+  .use(basicAuth({
+    scope: ['/logs']
+  }))
+  .use(staticPlugin(
+    {
+      assets:'./logs',
+      prefix: '/logs',
+    }
+  ))
   .listen(3333)
 
 setUpLogger().then(() => {
