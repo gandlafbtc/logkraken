@@ -10,5 +10,5 @@ FROM oven/bun:distroless AS release
 WORKDIR /app
 COPY --from=install /app/logkraken /app/logkraken
 
-EXPOSE 3001/tcp
+EXPOSE 3333/tcp
 ENTRYPOINT ["./logkraken"]
