@@ -1,0 +1,19 @@
+{
+  "name": "logkraken",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "bun build --compile --minify --sourcemap ./src/index.ts --outfile dist/ploofa",
+    "dev": "bun run --watch src/index.ts"
+  },
+  "dependencies": {
+    "elysia": "latest",
+    "@elysiajs/cors": "^1.2.0",
+    "@logtape/logtape": "^0.8.0",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "module": "src/index.js"
+}
